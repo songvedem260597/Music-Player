@@ -6,6 +6,8 @@ import Default from './components/Layouts/Default';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/scss/toastStyle.scss';
+import './assets/scss/Global.scss';
+
 import NotFound from './pages/404'; 
 
 

@@ -1,30 +1,30 @@
 .lyrics {
   display: flex;
   align-items: center;
-  height: 300px; /* Chiều cao của vùng hiển thị lời */
-  overflow: hidden; /* Ẩn phần lời vượt quá vùng hiển thị */
+  height: 700px; 
+  overflow: scroll; 
   text-align: center;
   flex-direction: column;
-  position: relative; /* Để có thể sử dụng absolute cho các dòng chữ */
+  position: relative; 
 }
 
 .lyric {
-  padding: 10px; /* Khoảng cách bên trong mỗi dòng */
-  cursor: pointer; /* Con trỏ khi di chuột qua */
+  padding: 10px;
+  cursor: pointer; 
   transition: background-color 0.3s, opacity 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
-  width: 100%; /* Đảm bảo chiều rộng dòng chữ */
-
-  transform: translateY(20px); /* Đẩy xuống dưới để tạo hiệu ứng chuyển động */
-  will-change: opacity, transform; /* Tối ưu hiệu suất cho chuyển đổi */
+  width: 100%; 
+  font-size: 70px;
+  transform: translateY(20px); 
+  will-change: opacity, transform; 
 }
 
 .lyric.active {
-  background-color: #d0e7ff; /* Màu nền cho lời bài hát đang phát */
-  opacity: 1; /* Hiển thị dòng chữ đang hoạt động */
-  transition-delay: 0.3s; /* Thêm độ trễ cho dòng active */
+  background-color: #d0e7ff; 
+  opacity: 1; 
+  transition-delay: 0.3s; 
 }
 
 .lyric:not(.active) {
-  opacity: .3; /* Hiển thị dòng chữ đang hoạt động */
-  transition: opacity 0.3s ease 0.3s, transform 0.3s ease 0.3s; /* Thêm độ trễ cho các dòng không hoạt động */
+  opacity: .3;
+  transition: opacity 0.3s ease 0.3s, transform 0.3s ease 0.3s;
 }

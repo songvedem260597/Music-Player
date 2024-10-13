@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../assets/scss/Lyrics.scss";
 import API from "../services/api";
 import Lyrics from './Lyrics'; 
+import "../assets/scss/ControlPlayer.scss";
 
 interface Lyric {
   time: number;
@@ -86,19 +86,16 @@ const AudioPlayer = () => {
       }
     }
   };
-
   const handlePlay = () => {
     if (audioRef.current) {
       audioRef.current.play();
     }
   };
-
   const handlePause = () => {
     if (audioRef.current) {
       audioRef.current.pause();
     }
   };
-
   const handleLyricClick = (lyric: Lyric) => {
     if (audioRef.current) {
       audioRef.current.currentTime = lyric.time; // Seek to the clicked lyric's time
@@ -135,18 +132,72 @@ const AudioPlayer = () => {
         currentLyricIndex={currentLyricIndex}
         onLyricClick={handleLyricClick}
       />
-      <input
-        type="range"
-        min="0"
-        max="100"
-        step="0.1"
-        value={seekValue} 
-        onChange={handleSeekChange}
-        onMouseUp={handleSeekCommit}
-        onTouchEnd={handleSeekCommit}
-      />
-      <button onClick={handlePlay}>Play</button>
-      <button onClick={handlePause}>Pause</button>
+      
+      <div id='control-player' className="ms-play-control-container">
+        <div className="ms-play-control-container-bg"></div>
+        <div className="ms-play-control-wrapper">
+          <div className="ms-play-control-info">
+            <div className="ms-play-control-img-song">
+              <button className="equalizer">
+                <span className="eq1"></span>
+                <span className="eq2"></span>
+                <span className="eq3"></span>
+              </button>
+              <img 
+                src="default-image-url.jpg" 
+                alt="Album Art" 
+                className="play-control-img-song" 
+              />
+            </div>
+            <div className="ms-control-info-song">
+              <div className="name-song">Song Name</div>
+              <div className="creator">Artist Name</div>
+            </div>
+          </div>
+
+          <div className="ms-play-control-player">
+            <div className="ms-control-player-button-control">
+              <i className="fas fa-step-backward btn-prev"></i>
+              <button className="play-button" onClick={handlePlay}>
+                <i className="fas fa-play btn-play"></i>
+              </button>
+              <i className="fas fa-step-forward btn-next"></i>
+            </div>
+            <div className="ms-player-progress-bar">
+              <div className="wrapper-progress-bar">
+                <div className="time current-time">00:00</div>
+                <input
+                  className="progress-bar"
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="0.1"
+                  value={seekValue} 
+                  onChange={handleSeekChange}
+                  onMouseUp={handleSeekCommit}
+                  onTouchEnd={handleSeekCommit}
+                />
+                <div className="time duration-time">--:--</div>
+              </div>
+            </div>
+          </div>
+          <div className="ms-play-control-right">
+            <div className="ms-play-control-random">
+              <span className="material-icons-outlined btn-random">shuffle</span>
+            </div>
+            <div className="ms-play-control-loop">
+              <span className="material-icons-outlined btn-loop">loop</span>
+            </div>
+            <div className="ms-play-control-add-play-list">
+              <span className="play-lyrics material-icons-outlined">mic_none</span>
+            </div>
+            <div className="ms-play-control-volume">
+              <i className="fas fa-volume-up btn-volume"></i>
+              <input className="volume" type="range"  min="0" max="100" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import "../assets/scss/Lyrics.scss";
 
 interface Lyric {
   time: number;
@@ -38,13 +39,12 @@ const Lyrics: React.FC<LyricsProps> = ({ lyrics, currentLyricIndex, onLyricClick
     <div
       ref={lyricsRef}
       className="lyrics"
-      style={{ height: '300px', overflowY: 'hidden' }}
     >
       {lyrics.map((lyric, index) => (
         <div
           key={index}
           className={`lyric ${currentLyricIndex === index ? 'active' : ''}`}
-          onClick={() => onLyricClick(lyric)} // Change lyric on click
+          onClick={() => onLyricClick(lyric)}
         >
           {lyric.text}
         </div>

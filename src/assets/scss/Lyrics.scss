@@ -7,7 +7,7 @@
   flex-direction: column;
   position: relative;
   width: 60%;
-  margin-top: 16vh;
+  top: 16vh;
   overflow-x: hidden;
   padding-right: 5%;
   z-index: 10;
@@ -109,4 +109,13 @@
   z-index: 2;
   margin: -40px 0 0 -40px;
   border-radius: 50%;
+}
+
+.no-lyric{
+  font-size: 56px;
+  font-weight: bold;  
+  color: var(--light-gray-color);
+  margin-top: 29%;
+  text-align: center;
+  z-index: 10;
 }

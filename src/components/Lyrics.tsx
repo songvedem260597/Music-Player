@@ -43,16 +43,20 @@ const Lyrics: React.FC<LyricsProps> = ({
   }, [currentLyricIndex]);
 
   return (
-    <div ref={lyricsRef} className="lyrics">
-      {lyrics.map((lyric, index) => (
-        <div
-          key={index}
-          className={`lyric ${currentLyricIndex === index ? "active" : ""}`}
-          onClick={() => onLyricClick(lyric)}
-        >
-          {lyric.text}
-        </div>
-      ))}
+<div ref={lyricsRef} className="lyrics">
+      {lyrics.length > 0 ? (
+        lyrics.map((lyric, index) => (
+          <div
+            key={index}
+            className={`lyric ${currentLyricIndex === index ? "active" : ""}`}
+            onClick={() => onLyricClick(lyric)}
+          >
+            {lyric.text}
+          </div>
+        ))
+      ) : (
+        <div className="no-lyric">Bài hát hiện tại chưa có lời</div>
+      )}
     </div>
   );
 };

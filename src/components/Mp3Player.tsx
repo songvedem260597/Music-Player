@@ -48,6 +48,8 @@ const AudioPlayer = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoop, setIsLoop] = useState(false);
+  const [isRandom, setIsRandom] = useState(false);
+  const [volume, setVolume] = useState(50);
 
   useEffect(() => {
     const fetchAudioData = async () => {
@@ -70,7 +72,7 @@ const AudioPlayer = () => {
       }
       const lrcText = await response.text();
       const parsedLyrics = parseLrc(lrcText);
-      setLyrics(parsedLyrics); // Cập nhật state lyrics
+      setLyrics(parsedLyrics);
     } catch (error) {
       console.error("Error fetching LRC data:", error);
     }
@@ -85,7 +87,12 @@ const AudioPlayer = () => {
           audio?.play();
         }, 1000);
       } else {
-        const nextIndex = (currentSongIndex + 1) % songs.length;
+        let nextIndex;
+        if (isRandom) {
+          nextIndex = Math.floor(Math.random() * songs.length);
+        } else {
+          nextIndex = (currentSongIndex + 1) % songs.length;
+        }
         setCurrentSongIndex(nextIndex);
         fetchLrcData(songs[nextIndex].lyricsUrl);
         setTimeout(() => {
@@ -96,7 +103,7 @@ const AudioPlayer = () => {
     };
     const updateTime = () => {
       if (audio) {
-        setCurrentTime(audio.currentTime); 
+        setCurrentTime(audio.currentTime);
       }
     };
     const updateDuration = () => {
@@ -154,6 +161,7 @@ const AudioPlayer = () => {
       setIsPlaying(!isPlaying);
     }
   };
+
   const handleLyricClick = (lyric: Lyric) => {
     if (audioRef.current) {
       audioRef.current.currentTime = lyric.time;
@@ -180,7 +188,7 @@ const AudioPlayer = () => {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
-        setIsPlaying(!isPlaying); 
+        setIsPlaying(!isPlaying);
       }
     }
     setCurrentLyricIndex(null);
@@ -196,6 +204,9 @@ const AudioPlayer = () => {
   const toggleLoop = () => {
     setIsLoop(!isLoop);
   };
+  const toggleRandom = () => {
+    setIsRandom(!isRandom);
+  };
 
   const handleSeekCommit = (
     event:
@@ -209,6 +220,13 @@ const AudioPlayer = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = seekTime;
       setCurrentTime(seekTime);
+    }
+  };
+  const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseInt(event.target.value, 10) / 100;
+    setVolume(newVolume * 100);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
     }
   };
   const formatTime = (time: number) => {
@@ -239,7 +257,7 @@ const AudioPlayer = () => {
         <div className="wrapper-img-action">
           <div className="overlay"></div>
           <img
-            className={isPlaying ? 'playing' : 'paused'}
+            className={isPlaying ? "playing" : "paused"}
             src={
               songs.length > 0
                 ? songs[currentSongIndex].avatar
@@ -324,7 +342,12 @@ const AudioPlayer = () => {
           </div>
           <div className="ms-play-control-right">
             <div className="ms-play-control-random">
-              <span className="material-icons-outlined btn-random">
+              <span
+                onClick={toggleRandom}
+                className={`${
+                  isRandom ? "active-btn" : ""
+                } material-icons-outlined btn-random`}
+              >
                 shuffle
               </span>
             </div>
@@ -345,7 +368,14 @@ const AudioPlayer = () => {
             </div>
             <div className="ms-play-control-volume">
               <i className="fas fa-volume-up btn-volume"></i>
-              <input className="volume" type="range" min="0" max="100" />
+              <input
+                className="volume"
+                type="range"
+                min="0"
+                max="100"
+                value={volume}
+                onChange={handleVolumeChange}
+              />
             </div>
           </div>
         </div>

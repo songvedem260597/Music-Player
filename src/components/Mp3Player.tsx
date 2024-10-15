@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import API from "../services/api";
-import Lyrics from './Lyrics'; 
+import Lyrics from "./Lyrics";
 import "../assets/scss/ControlPlayer.scss";
 
 interface Lyric {
   time: number;
   text: string;
 }
+interface Song {
+  audioUrl: string;
+  lyricsUrl: string;
+  title: string;
+  artist: string;
+  avatar: string;
+}
+
 const parseLrc = (lrcText: string): Lyric[] => {
   const lines = lrcText.split("\n");
   return lines
@@ -20,36 +28,40 @@ const parseLrc = (lrcText: string): Lyric[] => {
         const text = match[4].trim();
         return { time, text };
       }
-      return null; 
+      return null;
     })
-    .filter((item): item is Lyric => item !== null); 
+    .filter((item): item is Lyric => item !== null);
 };
 const AudioPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0);
+  const [durationTime, setDurationTime] = useState(0);
   const [lyrics, setLyrics] = useState<Lyric[]>([]);
   const [currentLyricIndex, setCurrentLyricIndex] = useState<number | null>(
     null
   );
-  const [seekTime, setSeekTime] = useState<number | null>(null); // Store seek time while user is sliding
+  const [seekTime, setSeekTime] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const [seekValue, setSeekValue] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [audioUrl, setAudioUrl] = useState("");
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoop, setIsLoop] = useState(false);
 
   useEffect(() => {
     const fetchAudioData = async () => {
       try {
         const response = await API.get("/audio");
         const data = response.data;
-        setAudioUrl(data.audioUrl);
-        fetchLrcData(data.lyrics);
+        setSongs(data.songs);
+        fetchLrcData(data.songs[0].lyricsUrl);
       } catch (error) {
         console.error("Error fetching audio data:", error);
       }
     };
     fetchAudioData();
   }, []);
-
   const fetchLrcData = async (lyricsUrl: string) => {
     try {
       const response = await fetch(lyricsUrl);
@@ -65,8 +77,48 @@ const AudioPlayer = () => {
   };
 
   useEffect(() => {
+    const audio = audioRef.current;
+    const handleEnded = () => {
+      if (isLoop) {
+        setTimeout(() => {
+          audio?.load();
+          audio?.play();
+        }, 1000);
+      } else {
+        const nextIndex = (currentSongIndex + 1) % songs.length;
+        setCurrentSongIndex(nextIndex);
+        fetchLrcData(songs[nextIndex].lyricsUrl);
+        setTimeout(() => {
+          audio?.load();
+          audio?.play();
+        }, 1000);
+      }
+    };
+    const updateTime = () => {
+      if (audio) {
+        setCurrentTime(audio.currentTime); 
+      }
+    };
+    const updateDuration = () => {
+      if (audio) {
+        setDurationTime(audio.duration);
+      }
+    };
+    if (audio) {
+      audio.addEventListener("ended", handleEnded);
+      audio.addEventListener("timeupdate", updateTime);
+      audio.addEventListener("loadedmetadata", updateDuration);
+    }
+    return () => {
+      if (audio) {
+        audio.removeEventListener("ended", handleEnded);
+      }
+    };
+  }, [currentSongIndex, isLoop, songs]);
+
+  useEffect(() => {
     const current = lyrics
-      .filter((lyric) => lyric && (seekTime ?? currentTime) >= lyric.time) 
+      .filter((lyric) => lyric && (seekTime ?? currentTime) >= lyric.time)
       .pop();
     if (current) {
       const index = lyrics.indexOf(current);
@@ -86,27 +138,63 @@ const AudioPlayer = () => {
       }
     }
   };
-  const handlePlay = () => {
+  const handleTogglePlay = () => {
     if (audioRef.current) {
-      audioRef.current.play();
-    }
-  };
-  const handlePause = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
+      if (isPlaying) {
+        audioRef.current.pause();
+        if (imgRef.current) {
+          imgRef.current.classList.add("paused");
+        }
+      } else {
+        audioRef.current.play();
+        if (imgRef.current) {
+          imgRef.current.classList.remove("paused");
+        }
+      }
+      setIsPlaying(!isPlaying);
     }
   };
   const handleLyricClick = (lyric: Lyric) => {
     if (audioRef.current) {
-      audioRef.current.currentTime = lyric.time; // Seek to the clicked lyric's time
+      audioRef.current.currentTime = lyric.time;
       setCurrentTime(lyric.time);
     }
+  };
+
+  const handleNext = () => {
+    const nextIndex = (currentSongIndex + 1) % songs.length;
+    setCurrentSongIndex(nextIndex);
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(!isPlaying);
+      }
+    }
+    setCurrentLyricIndex(null);
+    fetchLrcData(songs[nextIndex].lyricsUrl);
+  };
+
+  const handlePrev = () => {
+    const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    setCurrentSongIndex(prevIndex);
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(!isPlaying); 
+      }
+    }
+    setCurrentLyricIndex(null);
+    fetchLrcData(songs[prevIndex].lyricsUrl);
   };
 
   const handleSeekChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(event.currentTarget.value);
     setIsDragging(true);
     setSeekValue(newValue);
+  };
+
+  const toggleLoop = () => {
+    setIsLoop(!isLoop);
   };
 
   const handleSeekCommit = (
@@ -123,17 +211,49 @@ const AudioPlayer = () => {
       setCurrentTime(seekTime);
     }
   };
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes < 10 ? "0" : ""}${minutes}:${
+      seconds < 10 ? "0" : ""
+    }${seconds}`;
+  };
 
   return (
     <div>
-      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} src={audioUrl} />
-      <Lyrics
-        lyrics={lyrics}
-        currentLyricIndex={currentLyricIndex}
-        onLyricClick={handleLyricClick}
+      <audio
+        ref={audioRef}
+        onTimeUpdate={handleTimeUpdate}
+        src={songs.length > 0 ? songs[currentSongIndex].audioUrl : ""}
       />
-      
-      <div id='control-player' className="ms-play-control-container">
+      <div className="d-flex wrapper-lyrics">
+        <div className="blur-bg-lyrics"></div>
+        <img
+          className="img-blur"
+          src={
+            songs.length > 0
+              ? songs[currentSongIndex].avatar
+              : "default-image-url.jpg"
+          }
+        />
+        <div className="wrapper-img-action">
+          <div className="overlay"></div>
+          <img
+            className={isPlaying ? 'playing' : 'paused'}
+            src={
+              songs.length > 0
+                ? songs[currentSongIndex].avatar
+                : "default-image-url.jpg"
+            }
+          />
+        </div>
+        <Lyrics
+          lyrics={lyrics}
+          currentLyricIndex={currentLyricIndex}
+          onLyricClick={handleLyricClick}
+        />
+      </div>
+      <div id="control-player" className="ms-play-control-container">
         <div className="ms-play-control-container-bg"></div>
         <div className="ms-play-control-wrapper">
           <div className="ms-play-control-info">
@@ -143,57 +263,89 @@ const AudioPlayer = () => {
                 <span className="eq2"></span>
                 <span className="eq3"></span>
               </button>
-              <img 
-                src="default-image-url.jpg" 
-                alt="Album Art" 
-                className="play-control-img-song" 
+              <img
+                src={
+                  songs.length > 0
+                    ? songs[currentSongIndex].avatar
+                    : "default-image-url.jpg"
+                }
+                alt="Album Art"
+                className="play-control-img-song"
               />
             </div>
             <div className="ms-control-info-song">
-              <div className="name-song">Song Name</div>
-              <div className="creator">Artist Name</div>
+              <div className="name-song">
+                {songs.length > 0 ? songs[currentSongIndex].title : ""}
+              </div>
+              <div className="creator">
+                {songs.length > 0 ? songs[currentSongIndex].artist : ""}
+              </div>
             </div>
           </div>
-
           <div className="ms-play-control-player">
             <div className="ms-control-player-button-control">
-              <i className="fas fa-step-backward btn-prev"></i>
-              <button className="play-button" onClick={handlePlay}>
-                <i className="fas fa-play btn-play"></i>
+              <i
+                onClick={handlePrev}
+                className="fas fa-step-backward btn-prev"
+              ></i>
+              <button className="play-button" onClick={handleTogglePlay}>
+                <i
+                  className={`fas ${
+                    isPlaying ? "fa-pause" : "fa-play"
+                  } btn-play`}
+                ></i>
               </button>
-              <i className="fas fa-step-forward btn-next"></i>
+              <i
+                onClick={handleNext}
+                className="fas fa-step-forward btn-next"
+              ></i>
             </div>
             <div className="ms-player-progress-bar">
               <div className="wrapper-progress-bar">
-                <div className="time current-time">00:00</div>
+                <div className="time current-time">
+                  {formatTime(currentTime)}
+                </div>
                 <input
                   className="progress-bar"
                   type="range"
                   min="0"
                   max="100"
                   step="0.1"
-                  value={seekValue} 
+                  value={seekValue}
                   onChange={handleSeekChange}
                   onMouseUp={handleSeekCommit}
                   onTouchEnd={handleSeekCommit}
                 />
-                <div className="time duration-time">--:--</div>
+                <div className="time duration-time">
+                  {formatTime(durationTime)}
+                </div>
               </div>
             </div>
           </div>
           <div className="ms-play-control-right">
             <div className="ms-play-control-random">
-              <span className="material-icons-outlined btn-random">shuffle</span>
+              <span className="material-icons-outlined btn-random">
+                shuffle
+              </span>
             </div>
             <div className="ms-play-control-loop">
-              <span className="material-icons-outlined btn-loop">loop</span>
+              <span
+                onClick={toggleLoop}
+                className={`${
+                  isLoop ? "active-btn" : ""
+                } material-icons-outlined btn-loop`}
+              >
+                loop
+              </span>
             </div>
             <div className="ms-play-control-add-play-list">
-              <span className="play-lyrics material-icons-outlined">mic_none</span>
+              <span className="play-lyrics material-icons-outlined">
+                mic_none
+              </span>
             </div>
             <div className="ms-play-control-volume">
               <i className="fas fa-volume-up btn-volume"></i>
-              <input className="volume" type="range"  min="0" max="100" />
+              <input className="volume" type="range" min="0" max="100" />
             </div>
           </div>
         </div>

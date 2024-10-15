@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 import "../assets/scss/Lyrics.scss";
 
 interface Lyric {
@@ -12,38 +12,42 @@ interface LyricsProps {
   onLyricClick: (lyric: Lyric) => void;
 }
 
-const Lyrics: React.FC<LyricsProps> = ({ lyrics, currentLyricIndex, onLyricClick }) => {
+const Lyrics: React.FC<LyricsProps> = ({
+  lyrics,
+  currentLyricIndex,
+  onLyricClick,
+}) => {
   const lyricsRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
-    if (currentLyricIndex !== null && lyricsRef.current) {
-      const activeLyric = lyricsRef.current.children[currentLyricIndex];
-      if (activeLyric) {
-        const containerHeight = lyricsRef.current.clientHeight;
-        const activeLyricHeight = activeLyric.clientHeight;
-        const activeLyricOffset =
-          activeLyric.getBoundingClientRect().top -
-          lyricsRef.current.getBoundingClientRect().top;
-        const scrollTop =
-          activeLyricOffset +
-          lyricsRef.current.scrollTop -
-          containerHeight / 2 +
-          activeLyricHeight / 2;
+    if (lyricsRef.current) {
+      if (currentLyricIndex !== null && lyricsRef.current) {
+        const activeLyric = lyricsRef.current.children[currentLyricIndex];
+        if (activeLyric) {
+          const containerHeight = lyricsRef.current.clientHeight;
+          const activeLyricHeight = activeLyric.clientHeight;
+          const activeLyricOffset =
+            activeLyric.getBoundingClientRect().top -
+            lyricsRef.current.getBoundingClientRect().top;
+          const scrollTop =
+            activeLyricOffset +
+            lyricsRef.current.scrollTop -
+            containerHeight / 2 +
+            activeLyricHeight / 2;
 
-        lyricsRef.current.scrollTo({ top: scrollTop, behavior: 'smooth' });
+          lyricsRef.current.scrollTo({ top: scrollTop, behavior: "smooth" });
+        }
+      } else {
+        lyricsRef.current.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
   }, [currentLyricIndex]);
 
   return (
-    <div
-      ref={lyricsRef}
-      className="lyrics"
-    >
+    <div ref={lyricsRef} className="lyrics">
       {lyrics.map((lyric, index) => (
         <div
           key={index}
-          className={`lyric ${currentLyricIndex === index ? 'active' : ''}`}
+          className={`lyric ${currentLyricIndex === index ? "active" : ""}`}
           onClick={() => onLyricClick(lyric)}
         >
           {lyric.text}

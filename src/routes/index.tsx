@@ -5,6 +5,8 @@ import User from '../pages/User';
 import Register from '../pages/Register';
 import Logout from '../pages/Logout';
 import MusicPlayer from '../pages/MusicPlayer';
+import Home from '../pages/Home';
+
 
 
 
@@ -20,7 +22,7 @@ const PublicRoute: RouteType[] = [
   { path: '/logout', component: Logout ,layout:false},
   { path: '/music-player', component: MusicPlayer ,layout:false},
   { path: '/user', component: User ,layout:false},
-
+  { path: '/', component: Home ,layout:true},
 ];
 
 const PrivateRoute: RouteType[] = [

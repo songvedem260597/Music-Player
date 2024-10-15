@@ -1,5 +1,5 @@
 import Sidebar from "./Sidebar";
-import Footer from './Footer';
+import Footer from "./Footer";
 
 interface DefaultLayoutProps {
     children: React.ReactNode;  // The component(s) that will be rendered within the layout.

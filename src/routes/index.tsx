@@ -6,6 +6,10 @@ import Register from '../pages/Register';
 import Logout from '../pages/Logout';
 import MusicPlayer from '../pages/MusicPlayer';
 import Home from '../pages/Home';
+import Rankings from '../pages/Rankings';
+import Artist from '../pages/Artist';
+import TopSongs from '../pages/TopSongs';
+import Themes from '../pages/Themes';
 
 
 interface RouteType {
@@ -19,7 +23,11 @@ const PublicRoute: RouteType[] = [
   { path: '/register', component: Register ,layout:false},
   { path: '/logout', component: Logout ,layout:false},
   { path: '/new-songs', component: MusicPlayer ,layout:true},
-  { path: '/user', component: User ,layout:false},
+  { path: '/user', component: User ,layout:true},
+  { path: '/rankings', component: Rankings ,layout:true},
+  { path: '/artists', component: Artist ,layout:true},
+  { path: '/top-songs', component: TopSongs ,layout:true},
+  { path: '/song-theme', component: Themes ,layout:true},
   { path: '/', component: Home ,layout:true},
 ];
 

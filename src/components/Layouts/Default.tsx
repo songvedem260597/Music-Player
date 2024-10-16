@@ -9,7 +9,7 @@ const Default = ({children}:DefaultLayoutProps) =>{
     return (
         <div>
             <Sidebar />
-            {children}
+                {children}
             <Footer />
         </div>
     );

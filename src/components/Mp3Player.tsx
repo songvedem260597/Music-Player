@@ -50,12 +50,14 @@ const AudioPlayer = () => {
   const [isLoop, setIsLoop] = useState(false);
   const [isRandom, setIsRandom] = useState(false);
   const [volume, setVolume] = useState(50);
+  const [showLyrics, setShowLyrics] = useState(false);
 
   useEffect(() => {
     const fetchAudioData = async () => {
       try {
         const response = await API.get("/audio");
         const data = response.data;
+        console.log(data);
         setSongs(data.songs);
         fetchLrcData(data.songs[0].lyricsUrl);
       } catch (error) {
@@ -207,6 +209,9 @@ const AudioPlayer = () => {
   const toggleRandom = () => {
     setIsRandom(!isRandom);
   };
+  const handleLyricToggle = () => {
+    setShowLyrics((prev) => !prev); // Toggle the visibility
+  };
 
   const handleSeekCommit = (
     event:
@@ -238,13 +243,15 @@ const AudioPlayer = () => {
   };
 
   return (
-    <div>
+    <div className="no-scroll">
       <audio
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         src={songs.length > 0 ? songs[currentSongIndex].audioUrl : ""}
       />
-      <div className="d-flex wrapper-lyrics">
+      <div id="wrapper-lyrics"
+       className={`d-flex wrapper-lyrics ${showLyrics ? "hide-lyrics" : ""}`}
+      >
         <div className="blur-bg-lyrics"></div>
         <img
           className="img-blur"
@@ -362,7 +369,10 @@ const AudioPlayer = () => {
               </span>
             </div>
             <div className="ms-play-control-add-play-list">
-              <span className="play-lyrics material-icons-outlined">
+              <span
+                onClick={handleLyricToggle}
+                className={`${
+                  showLyrics ? "active-btn" : ""} play-lyrics material-icons-outlined btn-lyrics`}>
                 mic_none
               </span>
             </div>

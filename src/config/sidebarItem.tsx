@@ -1,42 +1,18 @@
-import { MdSpaceDashboard } from "react-icons/md";
-import { GrHostMaintenance } from "react-icons/gr";
-import { BsFiletypeMp3 } from "react-icons/bs";
-import { FaChartArea } from "react-icons/fa";
 
-
-export const sidebarItem = [
+export const SidebarItem = [
     {
-        label:'Dashboard',
-        icon: <MdSpaceDashboard />,
         items:[
-            {
-                icon: <FaChartArea />,
-                active:['dashboard'],
-                label:'Thống kê',
-                links:[
-                    {title:'Thống kê chung', to:'/dashboard'},
-                    {title:'Thống kê bài hát', to:'/dashboard/songs'},
-                    {title:'Thống kê nhạc sĩ', to:'/dashboard/artist'},
-                    {title:'Thống kê user', to:'/dashboard/user'},
-
-                ]
-            }
+            {icon:'material-icons-outlined',title:'album',label:'Cá nhân', to:'/user'},
+            {icon:'material-icons-outlined',title:'graphic_eq',label:'Trang chủ', to:'/'},
+            {icon:'material-icons-outlined',title:'equalizer',label:'BXH', to:'/rankings'},
+            {icon:'material-icons-outlined',title:'music_note',label:'Nhạc mới', to:'/new-songs'},
+            {icon:'material-icons-outlined',title:'people_outline',label:'Nghệ sĩ', to:'/artists'},
         ]
     },
     {
-        label:'Function',
-        icon: <GrHostMaintenance />,
         items:[
-            {
-                icon: <BsFiletypeMp3 />,
-                active:['music'],
-                label:'Music',
-                links:[
-                    {title:'Thống kê bài hát', to:'/music'},
-                    {title:'Thống kê nhạc sĩ', to:'/music/artist'},
-                    {title:'Thống kê playlist', to:'/music/playlist'},
-                ]
-            }
+            {icon:'material-icons-outlined',title:'show_chart',label:'Top 100', to:'/top-songs'},
+            {icon:'material-icons-outlined',title:'library_books',label:'Chủ đề', to:'/song-theme'}
         ]
     },
 ];

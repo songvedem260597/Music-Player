@@ -1,10 +1,16 @@
 * {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    font-family: Lexend;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Lexend;
 }
 
-.d-flex{
-    display: flex;
+body {
+  overflow-y: hidden;
+}
+.no-scroll {
+  overflow: hidden;
+}
+.d-flex {
+  display: flex;
 }

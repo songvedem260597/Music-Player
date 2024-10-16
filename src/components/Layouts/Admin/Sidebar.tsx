@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sidebarItem } from "../../../config/sidebarItem";
+import { SidebarDashBoardItem } from "../../../config/SidebarDashBoardItem";
 import { Link,useLocation } from 'react-router-dom';
 
 
@@ -7,10 +7,10 @@ const Sidebar = () =>{
     const location = useLocation();
     const [dropdownOpenIndex, setDropdownOpenIndex] = useState<number | null>(null);
     const toggleDropdown = (index:number) => {
-        setDropdownOpenIndex(dropdownOpenIndex === index ? null : index); // Đóng nếu nó đang mở, mở nếu nó đang đóng
+        setDropdownOpenIndex(dropdownOpenIndex === index ? null : index);
     };
     const isActive = (path: string) => {
-        return location.pathname === path; // Kiểm tra URL hiện tại có trùng với đường dẫn của item
+        return location.pathname === path;
     };
 
     return (
@@ -20,7 +20,7 @@ const Sidebar = () =>{
                     <ul className="space-y-2 font-medium">
 
                         {
-                            sidebarItem.map((groups, indexGroup) => (
+                            SidebarDashBoardItem.map((groups, indexGroup) => (
                                 <div key={indexGroup}>
                                     <li>
                                         <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

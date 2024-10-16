@@ -8,19 +8,17 @@ import MusicPlayer from '../pages/MusicPlayer';
 import Home from '../pages/Home';
 
 
-
-
 interface RouteType {
   path: string;
   component: React.ComponentType;
-  layout: boolean; // true for layout, false for page only
+  layout: boolean;
 }
 
 const PublicRoute: RouteType[] = [
   { path: '/login', component: Login ,layout:false},
   { path: '/register', component: Register ,layout:false},
   { path: '/logout', component: Logout ,layout:false},
-  { path: '/music-player', component: MusicPlayer ,layout:false},
+  { path: '/new-songs', component: MusicPlayer ,layout:true},
   { path: '/user', component: User ,layout:false},
   { path: '/', component: Home ,layout:true},
 ];

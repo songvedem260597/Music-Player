@@ -11,7 +11,7 @@ const Default = ({ children }: DefaultLayoutProps) => {
   return (
     <div className="app">
       <Sidebar />
-      <div className="container">
+      <div className="container-app">
         <Header />
         {children}
         <Footer />

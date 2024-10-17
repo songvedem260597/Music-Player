@@ -1,143 +1,144 @@
-
 .ms-wrapper-header {
-    position: fixed;
-    z-index: 8;
-    width: calc(100% - 200px);
-    height: 75px;
+  position: fixed;
+  z-index: 8;
+  width: calc(100% - 200px);
+  height: 75px;
 }
 
 .ms-header {
-    position: relative;
-    margin: 0 auto;
-    height: 100%;
-    width: 90%;
-    display: flex;
-    padding-top: 20px;
-
+  position: relative;
+  margin: 0 auto;
+  height: 100%;
+  width: 90%;
+  display: flex;
+  padding-top: 20px;
 }
 
 .search-container {
-    position: relative;
-    height: 35px;
-    background-color: var(--bg-search);
-    width: 300px;
+  position: relative;
+  height: 35px;
+  background-color: var(--bg-search);
+  width: 300px;
 }
 
 .ms-btn-search {
-    line-height: normal;
-    border: 0;
-    display: inline-block;
-    font-weight: 400;
-    text-transform: none;
-    text-align: center;
-    cursor: pointer;
+  line-height: normal;
+  border: 0;
+  display: inline-block;
+  font-weight: 400;
+  text-transform: none;
+  text-align: center;
+  cursor: pointer;
 }
 
 .search-result {
-    background-color: var(--blue-color);
-    margin-top: 20px;
-
+  background-color: var(--blue-color);
+  margin-top: 20px;
 }
 
 .search-result .media-body {
-    color: white;
-    display: flex;
-
+  color: white;
+  display: flex;
 }
 
 .search-result .media-body h5 {
-    padding-left: 10px;
-    font-weight: 500;
+  padding-left: 10px;
+  font-weight: 500;
 }
 
 .search-result .media {
-    padding: 5px;
-    transition: ease-in-out .2s;
+  padding: 5px;
+  transition: ease-in-out 0.2s;
 }
 
 .media a {
-    display: flex;
-    padding: 5px;
-    color: var(--gray-color);
-    font-size: 1rem;
+  display: flex;
+  padding: 5px;
+  color: var(--gray-color);
+  font-size: 1rem;
 }
 
 .media:hover {
-    background-color: var(--green-btn-color);
+  background-color: var(--green-btn-color);
 }
 
 .ms-btn-search .material-icons-outlined {
-    position: absolute;
-    cursor: pointer;
-    font-size: 1.2rem;
-    top: 9px;
-    left: 10px;
-    color: var(--light-gray-color);
+  position: absolute;
+  cursor: pointer;
+  font-size: 1.2rem;
+  top: 9px;
+  left: 10px;
+  color: var(--light-gray-color);
 }
 
 .search-container .input-wrapper {
-    position: absolute;
-    top: 0;
-    left: 38px;
-    right: 10px;
-    bottom: 0;
+  position: absolute;
+  top: 0;
+  left: 38px;
+  right: 10px;
+  bottom: 0;
 }
 
 .search-container input {
-    margin: 0;
-    display: inline-block;
-    font-size: 0.9rem;
-    width: 95%;
-    color: var(--dark-color);
-    background-clip: padding-box;
-    border: 0;
-    position: relative;
-    top: 0px;
-    height: 34px;
-    padding: 5px 0;
-    line-height: 34px;
-    outline: none;
-    background-color: transparent;
+  margin: 0;
+  display: inline-block;
+  font-size: 0.9rem;
+  width: 95%;
+  color: var(--dark-color);
+  background-clip: padding-box;
+  border: 0;
+  position: relative;
+  top: 0px;
+  height: 34px;
+  padding: 5px 0;
+  line-height: 34px;
+  outline: none;
+  background-color: transparent;
 }
 
 ::placeholder {
-    color: var(--light-gray-color);
-    font-weight: 200;
-    opacity: 1;
+  color: var(--light-gray-color);
+  font-weight: 200;
+  opacity: 1;
 }
 
 .ms-header-control {
-    height: 30px;
-    position: absolute;
-    right: 0;
+  height: 30px;
+  position: absolute;
+  right: 0;
 }
 
 .wrapper-header-control {
-    padding-top: 4px;
-    width: 100%;
-    justify-content: space-between;
-    display: flex;
+  padding-top: 4px;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
 }
 
 .wrapper-header-control a {
-    margin-left: 15px;
+  margin-left: 15px;
 }
 
 .login-trigger {
-    text-decoration: none;
-    height: 30px;
-    width: 105px;
-    background: linear-gradient(to bottom right, #5587b0, #7bf8d9);
+  text-decoration: none;
+  height: 30px;
+  width: 105px;
+  background: linear-gradient(to bottom right, #5587b0, #7bf8d9);
 }
 
 .sign-up-trigger {
-    background-color: #EFEFF1;
-    color: #000;
-    text-decoration: none;
+  background-color: #efeff1;
+  color: #000;
+  text-decoration: none;
 }
 
 .wrapper-header-control img {
-    border-radius: 50%;
-    height: 30px;
-    cursor: pointer;
+  border-radius: 50%;
+  height: 30px;
+  cursor: pointer;
+}
+
+input::placeholder {
+  color: #fff;
+  opacity: 1;
 }

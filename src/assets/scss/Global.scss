@@ -17,8 +17,9 @@ body {
 .d-flex {
   display: flex;
 }
-.container{
+.container-app{
   margin-left: 200px;
+  width: calc(100vw - 200px);
 }
 .app{
   position: absolute;

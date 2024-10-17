@@ -60,7 +60,9 @@ const AudioPlayer = () => {
         const response = await API.get("/audio");
         const data = response.data;
         setSongs(data.songs);
-        fetchLrcData(data.songs[0].lyricsUrl);
+        if (songs.length > 0) {
+          fetchLrcData(data.songs[0].lyricsUrl);
+        }
       } catch (error) {
         console.error("Error fetching audio data:", error);
       }
@@ -267,6 +269,10 @@ const AudioPlayer = () => {
       seconds < 10 ? "0" : ""
     }${seconds}`;
   };
+
+  if (songs.length === 0) {
+    return <div></div>;
+  }
 
   return (
     <div className="no-scroll">

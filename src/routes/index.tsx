@@ -4,7 +4,7 @@ import Dashboard from '../pages/admin/Dashboard';
 import User from '../pages/User';
 import Register from '../pages/Register';
 import Logout from '../pages/Logout';
-import MusicPlayer from '../pages/MusicPlayer';
+import NewSongs from '../pages/NewSongs';
 import Home from '../pages/Home';
 import Rankings from '../pages/Rankings';
 import Artist from '../pages/Artist';
@@ -22,7 +22,7 @@ const PublicRoute: RouteType[] = [
   { path: '/login', component: Login ,layout:false},
   { path: '/register', component: Register ,layout:false},
   { path: '/logout', component: Logout ,layout:false},
-  { path: '/new-songs', component: MusicPlayer ,layout:true},
+  { path: '/new-songs', component: NewSongs ,layout:true},
   { path: '/user', component: User ,layout:true},
   { path: '/rankings', component: Rankings ,layout:true},
   { path: '/artists', component: Artist ,layout:true},

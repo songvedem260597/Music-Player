@@ -1,4 +1,6 @@
 .wrapper-lyrics {
+  position: relative;
+  z-index: 10;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -75,6 +77,7 @@
   border: 5px solid var(--white-color);
   animation: rotate 20s linear infinite;
   position: relative;
+  object-fit: cover;
 }
 .wrapper-img-action img.paused {
   animation-play-state: paused;

@@ -11,6 +11,7 @@ interface ProtectedRouteProps{
 export const login = async (email: string, password: string) => {
   try{
     const response = await API.post(`/login`, { email, password });
+    console.log(response)
     return true;
   } catch(error: any){
     if (error.response && error.response.status === 401) {

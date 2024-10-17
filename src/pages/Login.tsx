@@ -6,7 +6,6 @@ import logoLogin from '../assets/images/login.gif';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-
 interface LoginFormInputs {
   email: string;
   password: string;

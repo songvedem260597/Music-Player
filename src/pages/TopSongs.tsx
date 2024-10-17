@@ -1,6 +1,6 @@
 const TopSongs =()=>{
     return (
-        <div>Đây là TopSongs TopSongs</div>
+        <div>Đây là TopSongs</div>
     );
 }
 

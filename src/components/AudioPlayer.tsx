@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import API from "../services/api";
 import Lyrics from "./Lyrics";
 import "../assets/scss/ControlPlayer.scss";
+import { useSongContext } from "../context/SongsContext"; // Import your context
 
 interface Lyric {
   time: number;
@@ -33,6 +34,7 @@ const parseLrc = (lrcText: string): Lyric[] => {
     .filter((item): item is Lyric => item !== null);
 };
 const AudioPlayer = () => {
+  const { songs, setSongs } = useSongContext();
   const [currentTime, setCurrentTime] = useState(0);
   const [durationTime, setDurationTime] = useState(0);
   const [lyrics, setLyrics] = useState<Lyric[]>([]);
@@ -45,19 +47,18 @@ const AudioPlayer = () => {
   const [seekValue, setSeekValue] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  const [songs, setSongs] = useState<Song[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoop, setIsLoop] = useState(false);
   const [isRandom, setIsRandom] = useState(false);
   const [volume, setVolume] = useState(50);
   const [showLyrics, setShowLyrics] = useState(false);
-
+  const [previousVolume, setPreviousVolume] = useState(100);
+  const [isMuted, setIsMuted] = useState(false);
   useEffect(() => {
     const fetchAudioData = async () => {
       try {
         const response = await API.get("/audio");
         const data = response.data;
-        console.log(data);
         setSongs(data.songs);
         fetchLrcData(data.songs[0].lyricsUrl);
       } catch (error) {
@@ -65,7 +66,14 @@ const AudioPlayer = () => {
       }
     };
     fetchAudioData();
-  }, []);
+  }, [setSongs]);
+
+  useEffect(() => {
+    if (songs.length > 0) {
+      fetchLrcData(songs[currentSongIndex]?.lyricsUrl);
+    }
+  }, [songs, currentSongIndex]);
+
   const fetchLrcData = async (lyricsUrl: string) => {
     try {
       const response = await fetch(lyricsUrl);
@@ -79,7 +87,6 @@ const AudioPlayer = () => {
       console.error("Error fetching LRC data:", error);
     }
   };
-
   useEffect(() => {
     const audio = audioRef.current;
     const handleEnded = () => {
@@ -163,14 +170,12 @@ const AudioPlayer = () => {
       setIsPlaying(!isPlaying);
     }
   };
-
   const handleLyricClick = (lyric: Lyric) => {
     if (audioRef.current) {
       audioRef.current.currentTime = lyric.time;
       setCurrentTime(lyric.time);
     }
   };
-
   const handleNext = () => {
     const nextIndex = (currentSongIndex + 1) % songs.length;
     setCurrentSongIndex(nextIndex);
@@ -196,7 +201,6 @@ const AudioPlayer = () => {
     setCurrentLyricIndex(null);
     fetchLrcData(songs[prevIndex].lyricsUrl);
   };
-
   const handleSeekChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(event.currentTarget.value);
     setIsDragging(true);
@@ -209,8 +213,25 @@ const AudioPlayer = () => {
   const toggleRandom = () => {
     setIsRandom(!isRandom);
   };
+
+  const toggleMute = () => {
+    if (isMuted) {
+      setVolume(previousVolume);
+      if (audioRef.current) {
+        audioRef.current.volume = previousVolume / 100;
+      }
+      setIsMuted(false);
+    } else {
+      setPreviousVolume(volume);
+      setVolume(0);
+      if (audioRef.current) {
+        audioRef.current.volume = 0;
+      }
+      setIsMuted(true);
+    }
+  };
   const handleLyricToggle = () => {
-    setShowLyrics((prev) => !prev); // Toggle the visibility
+    setShowLyrics((prev) => !prev);
   };
 
   const handleSeekCommit = (
@@ -230,6 +251,11 @@ const AudioPlayer = () => {
   const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseInt(event.target.value, 10) / 100;
     setVolume(newVolume * 100);
+    if (newVolume == 0) {
+      setIsMuted(true);
+    } else {
+      setIsMuted(false);
+    }
     if (audioRef.current) {
       audioRef.current.volume = newVolume;
     }
@@ -249,8 +275,9 @@ const AudioPlayer = () => {
         onTimeUpdate={handleTimeUpdate}
         src={songs.length > 0 ? songs[currentSongIndex].audioUrl : ""}
       />
-      <div id="wrapper-lyrics"
-       className={`d-flex wrapper-lyrics ${showLyrics ? "hide-lyrics" : ""}`}
+      <div
+        id="wrapper-lyrics"
+        className={`d-flex wrapper-lyrics ${showLyrics ? "hide-lyrics" : ""}`}
       >
         <div className="blur-bg-lyrics"></div>
         <img
@@ -372,12 +399,19 @@ const AudioPlayer = () => {
               <span
                 onClick={handleLyricToggle}
                 className={`${
-                  showLyrics ? "active-btn" : ""} play-lyrics material-icons-outlined btn-lyrics`}>
+                  showLyrics ? "active-btn" : ""
+                } play-lyrics material-icons-outlined btn-lyrics`}
+              >
                 mic_none
               </span>
             </div>
             <div className="ms-play-control-volume">
-              <i className="fas fa-volume-up btn-volume"></i>
+              <i
+                onClick={toggleMute}
+                className={`${
+                  isMuted ? "fa-volume-mute" : "fa-volume-up"
+                } fas  btn-volume`}
+              ></i>
               <input
                 className="volume"
                 type="range"

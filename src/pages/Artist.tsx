@@ -13,7 +13,7 @@ const Artist = () => {
   };
 
   return (
-    <div>
+    <div style={{ paddingTop: '100px' }}>
       <h1>Select an Artist</h1>
       <p>
         <button onClick={() => handleArtistSelect("1")}>Artist 1</button>

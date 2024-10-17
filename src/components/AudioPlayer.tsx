@@ -72,9 +72,15 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     if (songs.length > 0) {
+      setCurrentSongIndex(0);
+      setCurrentTime(0);
+      setSeekTime(null);
+      setSeekValue(0);
+      setIsPlaying(false);
+      setIsMuted(false);
       fetchLrcData(songs[currentSongIndex]?.lyricsUrl);
     }
-  }, [songs, currentSongIndex]);
+  }, [songs]);
 
   const fetchLrcData = async (lyricsUrl: string) => {
     try {

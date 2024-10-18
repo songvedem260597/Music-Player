@@ -18,7 +18,7 @@ input[type=radio] {
 }
 
 .ms-slide {
-    height: 600px;
+    height: 650px;
 }
 
 .cards {
@@ -35,7 +35,7 @@ input[type=radio] {
 
 .card {
     position: absolute;
-    width: 40%;
+    width: 50%;
     left: 0;
     right: 0;
     margin: auto;
@@ -60,6 +60,7 @@ input[type=radio] {
     border-radius: 50%;
     cursor: pointer;
     visibility: hidden;
+    z-index:10;
 }
 
 .wrap-control-slide {
@@ -78,8 +79,6 @@ input[type=radio] {
 .btn-carousel-next {
     left: 15%;
 }
-
-/*--Animation slide--*/
 
 #item-1:checked~.cards #song-3,
 #item-2:checked~.cards #song-1,

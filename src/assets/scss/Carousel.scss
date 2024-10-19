@@ -1,0 +1,14 @@
+.slick-prev,.slick-next{
+    z-index: 1;
+    top: -18px;
+}
+.slick-prev{
+    right: 30px;
+    left: auto;
+}
+.slick-next{
+    right: 5px;
+}
+.slick-slide img{
+    padding: 5%;
+}

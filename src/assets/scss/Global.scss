@@ -1,3 +1,28 @@
+:root {
+  --bg-color: #21324A;
+  --blue-color: #0E192A;
+  --gray-color: #afafaf;
+  --light-gray-color: #ececec;
+  --white-color: #fff;
+  --medium-blue-color: #11263a;
+  --light-blue-color: #00E5CE;
+  --yellow-color: #d9dd00;
+  --purple-color: #423ea3;
+  --green-color: #00ffb3;
+  --green-btn-color: #00d8ad;
+  --bg-footer: #0B1220;
+  --bg-search: hsla(0, 0%, 100%, 0.3);
+  --bg-control: #111727;
+  --dark-color: #16181B;
+  --border-control: #0C1524;
+  --bg-index: #0B1220;
+  --bg-btn-play: #2BDBEC;
+  --alpha-color: hsla(0, 0%, 100%, 0.1);
+  --betal-color: rgba(244, 246, 248, 0.02);
+  --text-title: #00311d;
+}
+
+
 * {
   margin: 0px;
   padding: 0px;
@@ -17,10 +42,146 @@ body {
 .d-flex {
   display: flex;
 }
+
+.app{
+  position: absolute;
+  height: 100%;
+}
+
+.wrapper-equalizer {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 2;
+  visibility: hidden;
+}
+
+.equalizer {
+  margin: 0 auto;
+  width: 15px;
+  background-color: transparent;
+  border: 0;
+  position: relative;
+  transition: opacity 0.5s ease;
+}
+
+.equalizer span {
+  display: inline-block;
+  width: 4px;
+  background-color: var(--green-color);
+  position: absolute;
+  bottom: 0;
+}
+
+@keyframes shorteq {
+  0% {
+      height: 15px
+  }
+  50% {
+      height: 10px
+  }
+  100% {
+      height: 15px
+  }
+}
+
+@-webkit-keyframes shorteq {
+  0% {
+      height: 15px
+  }
+  50% {
+      height: 10px
+  }
+  100% {
+      height: 15px
+  }
+}
+
+@keyframes talleq {
+  0% {
+      height: 20px
+  }
+  50% {
+      height: 13px
+  }
+  100% {
+      height: 20px
+  }
+}
+
+@-webkit-keyframes talleq {
+  0% {
+      height: 20px
+  }
+  50% {
+      height: 13px
+  }
+  100% {
+      height: 20px
+  }
+}
+
+.eq1 {
+  height: 13px;
+  left: 0;
+  animation-name: shorteq;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+  -webkit-animation-name: shorteq;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: infinite;
+  animation-delay: 0s;
+}
+
+.eq2 {
+  height: 15px;
+  left: 6px;
+  animation-name: talleq;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.17s;
+  -webkit-animation-name: talleq;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: infinite;
+  animation-delay: 0.17s;
+}
+
+.eq3 {
+  height: 13px;
+  left: 12px;
+  animation-name: shorteq;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.34s;
+  -webkit-animation-name: shorteq;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: infinite;
+  animation-delay: 0.34s;
+}
+
 .container-app{
   margin-left: 200px;
   width: calc(100vw - 200px);
+  overflow-y: auto;
+  background-color: var(--bg-index);
+  height: 100%;
 }
-.app{
-  position: absolute;
+
+.wrapper-content{
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 120px;
+  height: 100%;
+}
+
+.title-suggestion{
+  font-size: 25px;
+  color: var(--white-color);
+  font-weight: bold;
+  padding-left: 0.5%;
 }

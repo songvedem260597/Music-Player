@@ -58,9 +58,9 @@ input[type=radio] {
     border-radius: 50%;
     cursor: pointer;
     visibility: hidden;
-    z-index: 10;
-}
 
+    z-index:10;
+}
 .wrap-control-slide {
     position: absolute;
     display: flex;
@@ -77,8 +77,6 @@ input[type=radio] {
 .btn-carousel-next {
     left: 15%;
 }
-
-/*--Animation slide--*/
 
 #item-1:checked~.cards #song-3,
 #item-2:checked~.cards #song-1,

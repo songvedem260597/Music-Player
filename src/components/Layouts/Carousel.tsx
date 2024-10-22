@@ -8,39 +8,43 @@ import slide_3 from "../../assets/images/slide_3.png";
 import slide_4 from "../../assets/images/slide_4.png";
 import "../../assets/scss/Carousel.scss";
 
-// Define types for custom button props
 interface ArrowProps {
   onClick?: () => void;
   isActive?: boolean;
 }
 
-// Custom Next Button
 const NextArrow = ({ onClick, isActive = false }: ArrowProps) => {
   return (
     <button
-      className={`slick-next custom-next ${isActive ? "active-carousel" : ""}`}
-      onClick={onClick}
+      className={`btn-slick-next material-icons-outlined ${isActive ? "active-carousel" : ""}`}
+      onClick={() => {
+        onClick && onClick(); // Gọi hàm onClick khi nhấn nút
+      }}
     >
-      Next
+      arrow_back_ios
     </button>
   );
 };
 
-// Custom Previous Button
-const PrevArrow = ({ onClick }: ArrowProps) => {
+const PrevArrow = ({ onClick, isActive = false }: ArrowProps) => {
   return (
-    <button className="slick-prev custom-prev" onClick={onClick}>
-      Prev
+    <button
+      className={`btn-slick-prev material-icons-outlined ${isActive ? "active-carousel" : ""}`}
+      onClick={() => {
+        onClick && onClick(); // Gọi hàm onClick khi nhấn nút
+      }}
+    >
+      arrow_forward_ios
     </button>
   );
 };
+
 
 const Carousel = () => {
-  const [isActive, setIsActive] = useState(true);
-
-  // Event handler for afterChange, with a type definition
-  const handleAfterChange = (current: number) => {
-    setIsActive(current !== 0); // If not at the first slide, activate the Next button
+  const [activeArrow, setActiveArrow] = useState<"prev" | "next" | null>(null);
+  const handleArrowClick = (arrowType: "prev" | "next") => {
+    console.log(arrowType)
+    setActiveArrow(arrowType); 
   };
 
   // Settings for the carousel with type Settings from react-slick
@@ -59,10 +63,11 @@ const Carousel = () => {
     slidesToShow: 7,
     slidesToScroll: 1,
     autoplay: true,
-    nextArrow: <NextArrow isActive={isActive} />,
-    prevArrow: <PrevArrow />,
-    afterChange: handleAfterChange,
+    nextArrow: <NextArrow isActive={activeArrow === "next"} onClick={() => handleArrowClick("next")} />,
+    prevArrow: <PrevArrow isActive={activeArrow === "prev"} onClick={() => handleArrowClick("prev")} />
   };
+  
+
   return (
     <Slider {...settings}>
       <div>
@@ -84,7 +89,7 @@ const Carousel = () => {
         <img src={slide_2} alt="Item 2" />
       </div>
       <div>
-        <img src={slide_2} alt="Item 3" />
+        <img src={slide_3} alt="Item 3" />
       </div>
     </Slider>
   );

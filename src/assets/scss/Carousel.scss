@@ -1,13 +1,27 @@
-.slick-prev,.slick-next{
+.btn-slick-prev,.btn-slick-next{
     z-index: 1;
-    top: -18px;
+    top: -30px;
+    position: absolute;
+    right: 0px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    font-size: .9rem;
+    background-color: var(--bg-color);
+    color: #fff;
 }
-.slick-prev{
-    right: 30px;
-    left: auto;
+.btn-slick-prev{
+    width: 30px;
+    height: 30px;
+
 }
-.slick-next{
-    right: 5px;
+.btn-slick-next{
+    right: 40px;
+    width: 30px;
+    height: 30px;
+
 }
 .slick-slide img{
     padding: 5%;

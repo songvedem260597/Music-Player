@@ -56,10 +56,9 @@ const Carousel: React.FC<CarouselProps> = ({ aspectRatio, slidesToShow, itemCoun
     ),
   };
 
-  // Dynamically generate the number of items based on itemCount
   const items = Array.from({ length: itemCount }, (_, index) => (
-    <div key={index} style={{ aspectRatio }}>
-      <img src={slides[index % slides.length]} alt={`Slide ${index + 1}`} />
+    <div key={index} style={{ aspectRatio }} >
+      <img  src={slides[index % slides.length]} alt={`Slide ${index + 1}`} />
     </div>
   ));
 

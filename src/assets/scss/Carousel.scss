@@ -11,11 +11,13 @@
     font-size: .9rem;
     background-color: var(--bg-color);
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .btn-slick-prev{
     width: 30px;
     height: 30px;
-
 }
 .btn-slick-next{
     right: 40px;

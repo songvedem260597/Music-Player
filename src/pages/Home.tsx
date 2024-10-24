@@ -156,7 +156,7 @@ const Home = () => {
           </div>
         </div>
         <div className="ms-suggestion-song ms-theme-song">
-          <p className="title-suggestion">Chủ để âm nhạc</p>
+          <p className="title-suggestion">Chủ đề âm nhạc</p>
           <ThemeSong />
         </div>
       </div>

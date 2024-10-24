@@ -187,27 +187,29 @@ const AudioPlayer = () => {
   const handleNext = () => {
     const nextIndex = (currentSongIndex + 1) % songs.length;
     setCurrentSongIndex(nextIndex);
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(!isPlaying);
-      }
-    }
     setCurrentLyricIndex(null);
     fetchLrcData(songs[nextIndex].lyricsUrl);
+    if (audioRef.current) {
+      setTimeout(() => {
+        audioRef.current?.load(); 
+        audioRef.current?.play(); 
+        setIsPlaying(true); 
+      }, 1000);
+    }
   };
 
   const handlePrev = () => {
     const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     setCurrentSongIndex(prevIndex);
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(!isPlaying);
-      }
-    }
     setCurrentLyricIndex(null);
     fetchLrcData(songs[prevIndex].lyricsUrl);
+    if (audioRef.current) {
+      setTimeout(() => {
+        audioRef.current?.load(); 
+        audioRef.current?.play(); 
+        setIsPlaying(true); 
+      }, 1000);
+    }
   };
   const handleSeekChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(event.currentTarget.value);

@@ -155,7 +155,7 @@ const Home = () => {
             <SongList songs={songs} />
           </div>
         </div>
-        <div className="ms-suggestion-song">
+        <div className="ms-suggestion-song ms-theme-song">
           <p className="title-suggestion">Chủ để âm nhạc</p>
           <ThemeSong />
         </div>

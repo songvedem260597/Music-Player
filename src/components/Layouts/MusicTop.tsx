@@ -9,48 +9,48 @@ const MusicTop = () =>{
             <li className="list-music-top" >
                 <div className="item">
                     <div className="number-new-song">
-                        <h2 className="number-rank-song"></h2>
+                        <h2 className="number-rank-song">#1</h2>
                     </div>
                     <div className="wrapper-suggestion">
                         <span className="material-icons flex-center">play_arrow</span>
                         <div className="overlay"></div>
-                        <img height="190" src={Banner_1} />
+                        <img height="190" src={Banner_2} />
                     </div>
                     <div className="info-new-song">
-                        <div className="name"></div>
-                        <div className="creator"></div>
+                        <div className="name">Bạc phân</div>
+                        <div className="creator">Masew</div>
                     </div>
                 </div>
             </li>
             <li className="list-music-top" >
                 <div className="item">
                     <div className="number-new-song">
-                        <h2 className="number-rank-song"></h2>
+                        <h2 className="number-rank-song">#2</h2>
                     </div>
                     <div className="wrapper-suggestion">
                         <span className="material-icons flex-center">play_arrow</span>
                         <div className="overlay"></div>
-                        <img height="190" src={Banner_1} />
+                        <img height="190" src={Banner_3} />
                     </div>
                     <div className="info-new-song">
-                        <div className="name"></div>
-                        <div className="creator"></div>
+                        <div className="name">Bạc phân</div>
+                        <div className="creator">Masew</div>
                     </div>
                 </div>
             </li>
             <li className="list-music-top" >
                 <div className="item">
                     <div className="number-new-song">
-                        <h2 className="number-rank-song"></h2>
+                        <h2 className="number-rank-song">#3</h2>
                     </div>
                     <div className="wrapper-suggestion">
                         <span className="material-icons flex-center">play_arrow</span>
                         <div className="overlay"></div>
-                        <img height="190" src={Banner_1} />
+                        <img height="190" src={Banner_3} />
                     </div>
                     <div className="info-new-song">
-                        <div className="name"></div>
-                        <div className="creator"></div>
+                        <div className="name">Bước qua nhau</div>
+                        <div className="creator">Vũ</div>
                     </div>
                 </div>
             </li>

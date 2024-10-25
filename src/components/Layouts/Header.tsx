@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
-import '../../assets/scss/Header.scss';
-const Header = () => {
+import "../../assets/scss/Header.scss";
+
+interface HeaderProps {
+  scrolled: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ scrolled }) => {
   return (
-    <div id="header" className="ms-wrapper-header">
+    <div id="header" className={`ms-wrapper-header ${scrolled ? "scrolled" : ""}`}>
       <div className="ms-header">
-        <div id="search" className="search-container">
+        <div id="search" className={`search-container ${scrolled ? "scrolled" : ""}`}>
           <button className="ms-btn-search">
             <span className="material-icons-outlined">search</span>
           </button>
@@ -12,29 +17,18 @@ const Header = () => {
             <input
               type="text"
               id="input-search"
-              className="input-search form-control"
+              className={`input-search form-control ${scrolled ? "scrolled" : ""}`}
               placeholder="Nhập tên bài hát, nghệ sĩ…"
             />
           </div>
-          <div className="search-result" id="search-result"></div>
+          <div id="search-result" className={`search-result ${scrolled ? "scrolled" : ""}`}></div>
         </div>
         <div className="ms-header-control">
           <div className="wrapper-header-control">
-            <Link
-              id="signUpHeader"
-              className="btn sign-up-trigger"
-              to="/login"
-              data-target="#login"
-              data-toggle="modal"
-            >
+            <Link id="signUpHeader" className="btn sign-up-trigger" to="/login">
               Đăng Ký
             </Link>
-            <Link
-              id="signInHeader"
-              to="/register"
-              className="btn login-trigger"
-              data-toggle="modal"
-            >
+            <Link id="signInHeader" to="/register" className="btn login-trigger">
               Đăng Nhập
             </Link>
           </div>

@@ -1,5 +1,5 @@
 import "../../assets/scss/MusicTop.scss";
-import Banner_1 from "../../assets/images/3107_banner.jpg";
+import Banner_1 from "../../assets/images/thang_dien_banner.jpg";
 import Banner_2 from "../../assets/images/bac_phan_remix_banner.jpg";
 import Banner_3 from "../../assets/images/buoc_qua_nhau_banner.jpg";
 
@@ -17,7 +17,7 @@ const MusicTop = () =>{
                         <img height="190" src={Banner_2} />
                     </div>
                     <div className="info-new-song">
-                        <div className="name">Bạc phân</div>
+                        <div className="name">Bạc phận</div>
                         <div className="creator">Masew</div>
                     </div>
                 </div>
@@ -30,11 +30,11 @@ const MusicTop = () =>{
                     <div className="wrapper-suggestion">
                         <span className="material-icons flex-center">play_arrow</span>
                         <div className="overlay"></div>
-                        <img height="190" src={Banner_3} />
+                        <img height="190" src={Banner_1} />
                     </div>
                     <div className="info-new-song">
-                        <div className="name">Bạc phân</div>
-                        <div className="creator">Masew</div>
+                        <div className="name">Thằng điên</div>
+                        <div className="creator">Justatee x Phương Ly</div>
                     </div>
                 </div>
             </li>

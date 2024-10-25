@@ -1,16 +1,31 @@
 import React from "react";
 import Slide from "../components/Layouts/Slide";
 import Carousel from "../components/Layouts/Carousel";
+
+
 import slide_1 from "../assets/images/slide_1.png";
 import slide_2 from "../assets/images/slide_2.png";
 import slide_3 from "../assets/images/slide_3.png";
 import slide_4 from "../assets/images/slide_4.png";
+import slide_5 from "../assets/images/slide_5.png";
+import slide_6 from "../assets/images/slide_6.png";
+
+
+import category_1 from "../assets/images/category_1.png";
+import category_2 from "../assets/images/category_2.png";
+import category_3 from "../assets/images/category_3.png";
+import category_4 from "../assets/images/category_4.png";
+import category_5 from "../assets/images/category_5.png";
+import category_6 from "../assets/images/category_6.png";
+
+
 import SongList from "../components/SongList";
 import MusicTop  from "../components/Layouts/MusicTop";
 import ThemeSong  from "../components/Layouts/ThemeSong";
 
 const Home = () => {
-  const generalSlides = [slide_1, slide_2, slide_3, slide_4];
+  const generalSlides   = [slide_1, slide_2, slide_3, slide_4,slide_5, slide_6];
+  const categorySlides  = [category_1, category_2, category_3, category_4, category_5, category_6];
   const songs = [
     {
       musicUrl: 'https://songvedem260597.github.io/assets/mp3/bac_phan_remix.mp3',
@@ -144,7 +159,7 @@ const Home = () => {
         </div>
         <div className="ms-suggestion-song">
           <p className="title-suggestion">Thể loại</p>
-          <Carousel aspectRatio="16/9" slidesToShow={6} itemCount={6} slides={generalSlides} />
+          <Carousel aspectRatio="16/9" slidesToShow={6} itemCount={6} slides={categorySlides} />
         </div>
         <div className="ms-suggestion-song ms-top-song">
           <p className="title-suggestion">Nhạc mới</p>

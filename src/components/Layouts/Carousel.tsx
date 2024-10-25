@@ -11,7 +11,9 @@ interface ArrowProps {
 
 const NextArrow = ({ onClick, isActive = false }: ArrowProps) => (
   <button
-    className={`btn-slick-next material-icons-outlined ${isActive ? "active-carousel" : ""}`}
+    className={`btn-slick-next material-icons-outlined ${
+      isActive ? "active-carousel" : ""
+    }`}
     onClick={onClick}
   >
     arrow_back_ios
@@ -20,11 +22,12 @@ const NextArrow = ({ onClick, isActive = false }: ArrowProps) => (
 
 const PrevArrow = ({ onClick, isActive = false }: ArrowProps) => (
   <button
-    className={`btn-slick-prev material-icons-outlined ${isActive ? "active-carousel" : ""}`}
+    className={`btn-slick-prev material-icons-outlined ${
+      isActive ? "active-carousel" : ""
+    }`}
     onClick={onClick}
   >
     arrow_forward_ios
-    
   </button>
 );
 
@@ -32,10 +35,19 @@ interface CarouselProps {
   aspectRatio: string;
   slidesToShow: number;
   itemCount: number;
-  slides: string[]; // Add slides as a prop
+  slides: string[];
+  borderRadius?: string;
+  text?: string[];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ aspectRatio, slidesToShow, itemCount, slides }) => {
+const Carousel: React.FC<CarouselProps> = ({
+  aspectRatio,
+  slidesToShow,
+  itemCount,
+  slides,
+  borderRadius,
+  text
+}) => {
   const [activeArrow, setActiveArrow] = useState<"prev" | "next" | null>(null);
 
   const handleArrowClick = (arrowType: "prev" | "next") => {
@@ -49,16 +61,26 @@ const Carousel: React.FC<CarouselProps> = ({ aspectRatio, slidesToShow, itemCoun
     slidesToScroll: 1,
     autoplay: true,
     nextArrow: (
-      <NextArrow isActive={activeArrow === "next"} onClick={() => handleArrowClick("next")} />
+      <NextArrow
+        isActive={activeArrow === "next"}
+        onClick={() => handleArrowClick("next")}
+      />
     ),
     prevArrow: (
-      <PrevArrow isActive={activeArrow === "prev"} onClick={() => handleArrowClick("prev")} />
+      <PrevArrow
+        isActive={activeArrow === "prev"}
+        onClick={() => handleArrowClick("prev")}
+      />
     ),
   };
 
   const items = Array.from({ length: itemCount }, (_, index) => (
-    <div key={index} style={{ aspectRatio }} >
-      <img  src={slides[index % slides.length]} alt={`Slide ${index + 1}`} />
+    <div key={index} style={{ aspectRatio }}>
+      <img style={{ borderRadius }} src={slides[index % slides.length]} alt={`Slide ${index + 1}`} />
+      {text && text[index] && (
+        <div className="slider-text">{text[index]}</div>
+      )}
+
     </div>
   ));
 

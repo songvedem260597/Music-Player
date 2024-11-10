@@ -25,9 +25,15 @@ const getLayout = (pathname: string) => {
 };
 const AudioPlayerWrapper: React.FC = () => {
   const location = useLocation();
-  const showAudioPlayer = !location.pathname.includes("dashboard");
-  return <>{showAudioPlayer && <AudioPlayer />}</>;
+  // Ẩn AudioPlayer khi đường dẫn chứa "dashboard", "login", hoặc "register"
+  const hideAudioPlayer =
+    location.pathname.includes("dashboard") ||
+    location.pathname.includes("login") ||
+    location.pathname.includes("register");
+
+  return <>{!hideAudioPlayer && <AudioPlayer />}</>;
 };
+
 const App = () => {
   return (
     <SongProvider>
@@ -77,7 +83,7 @@ const App = () => {
               />
             );
           })}
-        <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </SongProvider>

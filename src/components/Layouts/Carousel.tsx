@@ -80,7 +80,6 @@ const Carousel: React.FC<CarouselProps> = ({
       {text && text[index] && (
         <div className="slider-text">{text[index]}</div>
       )}
-
     </div>
   ));
 
